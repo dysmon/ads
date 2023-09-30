@@ -15,7 +15,7 @@ public class I {
         }
         int vote = 0;
 
-        while(q.size() > 1 && q.size() > Math.abs(vote)) {
+        while(q.size() > Math.abs(vote)) {
             if(q.element() == 'K'){
                 if(vote < 0){
                     q.remove();
