@@ -1,6 +1,7 @@
 package lab1;
 
-import java.util.*;
+import java.util.Scanner;
+import java.util.Stack;
 
 public class B {
     public static void main(String[] args) {

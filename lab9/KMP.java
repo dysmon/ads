@@ -1,55 +1,49 @@
 package lab9;
-
-import java.util.Arrays;
-
 public class KMP {
     public static int[] computeLPSArray(String pattern) {
         int m = pattern.length();
-        int[] lps = new int[m];
-        int len = 0; // Length of the previous longest prefix suffix
-        int j = 1;
+        int[] array = new int[m];
+        int k = 0;
 
-        while (j < m) {
-            if (pattern.charAt(j) == pattern.charAt(len)) {
-                len++;
-                lps[j] = len;
-                j++;
-            } else if (len > 0) {
-                len = lps[len - 1];
-            } else {
-                lps[j] = 0;
-                j++;
+        for (int q = 1; q < m; q++) {
+            while (k > 0 && pattern.charAt(k) != pattern.charAt(q)) {
+                k = array[k - 1];
             }
+            if (pattern.charAt(k) == pattern.charAt(q)) {
+                k = k + 1;
+            }
+            array[q] = k;
         }
-        return lps;
+
+        return array;
     }
 
     public static void search(String text, String pattern) {
         int n = text.length();
         int m = pattern.length();
-
         int[] lps = computeLPSArray(pattern);
+        int q = 0;
 
-        int i = 0; // Index for traversing the text
-        int j = 0; // Index for traversing the pattern
-
-        while (i < n) {
-            if (pattern.charAt(j) != text.charAt(i)) {
-                if (j > 0) j = lps[j - 1];
-                else i++;
-            } else {
-                i++;
-                j++;
-            }
-            if (j == m) {
-                System.out.println("Pattern found at index " + (i - j));
-                j = lps[j - 1];
+        for (int i = 0; i < n; i++) {
+            while (q > 0 && text.charAt(i) != pattern.charAt(q)) {
+                q = lps[q - 1];
             }
 
+            if (pattern.charAt(q) == text.charAt(i)) {
+                q++;
+            }
+
+            if (q == m) {
+                System.out.println("Pattern found at index " + (i - m + 1));
+                q = lps[q - 1];
+            }
         }
     }
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(computeLPSArray("janjaa")));
+        String text = "ababcababcabcabc";
+        String pattern = "ababc";
+
+        search(text, pattern);
     }
 }

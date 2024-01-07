@@ -85,8 +85,7 @@ class BinarySearchTree {
     }
 
     public void rInsert(int value) {
-        if (root == null) root = new Node(value);
-        rInsert(root, value);
+        root = rInsert(root, value);
     }
 
     public ArrayList<Integer> BFS() {
